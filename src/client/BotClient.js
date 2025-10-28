@@ -1,51 +1,59 @@
-// src/BotClient.js
-
-const tmi = require('tmi.js');
+const { ChatClient } = require("@twurple/chat")
+const { StaticAuthProvider } = require("@twurple/auth")
 
 class BotClient {
     constructor(config) {
         this.config = config;
 
-        // TMI.js Client initialisieren
-        this.client = new tmi.Client({
-            options: { debug: false },
-            connection: { reconnect: true },
-            identity: {
-                username: config.botName,
-                password: config.oauthToken // Der Token für den Chat-Login
-            },
+        const accessToken = config.oauthToken.startsWith('oauth:')
+            ? config.oauthToken.substring(6)
+            : config.oauthToken;
+
+        const authProvider = new StaticAuthProvider(config.clientId, accessToken);
+
+        this.client = new ChatClient({
+            authProvider: authProvider,
             channels: [config.channel]
         });
 
-        // Events abonnieren:
-        this.client.on('message', this.onMessage.bind(this)); // Hören von Nachrichten
-        this.client.on('connected', (address, port) => {
-            console.log(`BotClient: Erfolgreich mit dem Chat (${address}:${port}) verbunden!`);
+        this.client.onMessage(this.onMessage.bind(this));
+
+        this.client.onConnect(() => {
+            console.log(`BotClient: Erfolgreich mit dem Chat verbunden!`);
+            console.log(`BotClient: Verfolgt Kanal: ${config.channel}`);
+        });
+
+        this.client.onDisconnect((wasClean) => {
+            console.log(`BotClient: Verbindung getrennt (Sauber: ${wasClean})`);
         });
     }
 
-    connect() {
-        this.client.connect();
+    onConnect() {
+        return this.client.connect();
     }
 
-    // Methode, die bei JEDER empfangenen Nachricht ausgeführt wird
-    onMessage(channel, tags, message, self) {
-        // Ignoriere Nachrichten vom Bot selbst
-        if (self) return;
+    onMessage(channel, user, message, msg) {
+        // Ignoriere Nachrichten vom Bot selbst (Twurple prüft dies auch über msg.isSelf, aber der Username-Vergleich ist sicher)
+        if (user.toLowerCase() === this.config.botName.toLowerCase()) return;
 
-        const username = tags.username;
+        // Alternativ und Twurple-spezifisch:
+        // if (msg.isSelf) return;
+
+        const displayName = msg.userInfo.displayName; // Der angezeigte Name
+        const username = user; // Der Login-Name (immer kleingeschrieben)
 
         // 1. Nachrichten hören: Einfache Konsolenausgabe
-        console.log(`[${channel}] <${username}>: ${message}`);
+        console.log(`[${channel}] <${displayName} (${username})>: ${message}`);
 
         // 2. Nachrichten lesen/reagieren: Beispiel !ping
         if (message.toLowerCase() === '!ping') {
-            this.client.say(channel, `@${username}, Pong!`);
+            // client.say() funktioniert genau gleich
+            this.client.say(channel, `@${displayName}, Pong!`);
         }
 
         // 3. Nachrichten lesen/reagieren: Beispiel einfacher Custom Command
         if (message.toLowerCase().includes('bot ist doof')) {
-            this.client.say(channel, `@${username}, Das ist nicht nett 😔!`);
+            this.client.say(channel, `@${displayName}, Das ist nicht nett 😔!`);
         }
     }
 }
