@@ -30,8 +30,12 @@
     "@twurple/auth": "^7.4.0",
     "@twurple/chat": "^7.4.0",
     "@twurple/eventsub-ws": "^7.4.0",
+    "axios": "^1.13.0",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "mongoose": "^8.19.2",
     "ws": "^8.18.3"
   }
 }
