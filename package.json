@@ -1,0 +1,35 @@
+{
+  "name": "twitchbot-kognito",
+  "version": "1.0.0",
+  "description": "Official & Public Advanced Modern Twitch Bot",
+  "keywords": [
+    "MecryTv",
+    "Twitch",
+    "Bot",
+    "Public",
+    "NodeJS",
+    "JavaScript"
+  ],
+  "homepage": "https://github.com/MecryTv/TwitchBot-Kognito#readme",
+  "bugs": {
+    "url": "https://github.com/MecryTv/TwitchBot-Kognito/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MecryTv/TwitchBot-Kognito.git"
+  },
+  "license": "MIT",
+  "author": "MecryTv",
+  "type": "commonjs",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@twurple/api": "^7.4.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "tmi.js": "^1.8.5",
+    "ws": "^8.18.3"
+  }
+}
