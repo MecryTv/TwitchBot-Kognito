@@ -1,0 +1,111 @@
+:root {
+    --twitch-dark-gray: #1f1f23;
+    --twitch-light-text: #efeff1;
+    --twitch-purple: #9146FF;
+    --twitch-purple-hover: #772ce8;
+    --card-bg: #2c2c34;
+    --gray-400: #9ca3af;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--twitch-dark-gray);
+    color: var(--twitch-light-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 1.25rem;
+    box-sizing: border-box;
+}
+
+.login-card {
+    text-align: center;
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    max-width: 24rem;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+    .login-card {
+        padding: 3rem;
+    }
+}
+
+.login-card h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+    .login-card h1 {
+        font-size: 3rem;
+    }
+}
+
+.login-card h1 span {
+    color: var(--twitch-purple);
+    margin-right: 0.75rem;
+    display: flex;
+    align-items: center;
+}
+
+.login-card h1 span svg {
+    width: 2rem;
+    height: 2rem;
+}
+
+@media (min-width: 768px) {
+    .login-card h1 span svg {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}
+
+.login-card p {
+    margin-bottom: 2.5rem;
+    color: var(--gray-400);
+}
+
+.twitch-btn {
+    background-color: var(--twitch-purple);
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 20px 25px -5px rgba(145, 70, 255, 0.4);
+    align-items: center;
+    justify-content: center;
+}
+
+.twitch-btn:hover {
+    background-color: var(--twitch-purple-hover);
+    transform: translateY(-0.125rem);
+    box-shadow: 0 25px 50px -12px rgba(119, 44, 232, 0.6);
+}
+
+.twitch-btn svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+}
