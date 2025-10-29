@@ -30,6 +30,7 @@ router.get('/twitch/callback', async (req, res) => {
         const userData = {
             twitchId: userInfo.id,
             username: userInfo.login,
+            displayName: userInfo.display_name,
             accessToken: access_token,
             refreshToken: refresh_token,
             scope: scopesToStore,
@@ -38,8 +39,12 @@ router.get('/twitch/callback', async (req, res) => {
         logger.info(`💾 Speichere Benutzer: ${userData.username} (${userData.twitchId})`);
         const storedUser = await UserService.saveOrUpdateUser(userData);
 
+        // WICHTIG: Alle benötigten Daten in Session speichern
         req.session.userId = storedUser.twitchId;
         req.session.username = storedUser.username;
+        req.session.displayName = storedUser.displayName; // ✅ Hinzugefügt
+        req.session.accessToken = access_token; // ✅ Hinzugefügt
+        req.session.refreshToken = refresh_token; // ✅ Optional, aber nützlich
 
         logger.info(`✅ Login erfolgreich für: ${storedUser.username}`);
         logger.info(`🔄 Weiterleitung zu /dashboard`);
