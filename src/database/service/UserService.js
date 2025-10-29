@@ -4,6 +4,7 @@ const logger = require('../../utils/logger');
 const UserSchema = new mongoose.Schema({
     twitchId: { type: String, required: true, unique: true },
     username: { type: String, required: true },
+    displayName: { type: String, required: true },
     accessToken: { type: String, required: true },
     refreshToken: { type: String, required: true },
     scope: [String],
@@ -18,12 +19,13 @@ const UserModel = mongoose.model('User', UserSchema);
 class UserService {
     static async saveOrUpdateUser(userData) {
         try {
-            const { twitchId, username, accessToken, refreshToken, scope } = userData;
+            const { twitchId, username, displayName, accessToken, refreshToken, scope } = userData;
 
             const user = await UserModel.findOneAndUpdate(
                 { twitchId },
                 {
                     username,
+                    displayName,
                     accessToken,
                     refreshToken,
                     scope,
