@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
         return res.redirect('/dashboard');
     }
 
-    const filePath = path.join(__dirname, '..', 'public', 'index.html');
+    const filePath = path.join(__dirname, '..', 'public', 'html', 'index.html');
     res.sendFile(filePath, (err) => {
         if (err) {
             console.error('Fehler beim Senden der index.html:', err);
