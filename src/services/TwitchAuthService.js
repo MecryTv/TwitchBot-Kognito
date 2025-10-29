@@ -65,8 +65,6 @@ class TwitchAuthService {
         const url = 'https://api.twitch.tv/helix/users';
 
         try {
-            logger.debug('👤 Rufe Benutzerinfo ab...');
-
             const response = await axios.get(url, {
                 headers: {
                     'Client-ID': TWITCH_CLIENT_ID,
